@@ -1,4 +1,7 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
   jpa:
     hibernate:
       ddl-auto: ${DDL_AUTO}
@@ -18,7 +21,7 @@ spring:
       port: ${REDIS_PORT}
 
   datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useUnicode=true&useLegacyDatetimeCode=false
+    url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -41,8 +44,12 @@ spring:
       retries: 3
       acks: all
 
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 3600000
+
 logging:
   level:
     org.hibernate.sql: debug
     org.hibernate.type: trace
-    org.springframework.kafka: debug  # Kafka ?? ???
+    org.springframework.kafka: debug
