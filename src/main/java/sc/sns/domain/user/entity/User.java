@@ -1,24 +1,21 @@
 package sc.sns.domain.user.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import sc.sns.domain.user.type.Authority;
+import lombok.*;
 
-@Getter
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Entity
-@Builder
-@Table(name = "user")
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
+@Table(name = "users")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", updatable = false, nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -27,9 +24,11 @@ public class User {
     private String password;
 
     @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false)
     private String nickname;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Authority authority;
+    private LocalDateTime createdAt;
 }
