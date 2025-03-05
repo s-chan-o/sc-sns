@@ -8,18 +8,20 @@ import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @AllArgsConstructor
-@RedisHash(value = "refreshToken")
+@RedisHash(value = "refresh_token")
 public class RefreshToken {
 
     @Id
-    @Indexed
-    private Long userId;
-
-    @Indexed
     private String token;
 
+    @Indexed
+    private UUID userId;
+
     @TimeToLive
-    private Long expirationTime;}
+    private Long expirationTime;
+}
