@@ -8,57 +8,49 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
-
-    /* Auth */
-    EMAIL_ALREADY_EXISTS(409, "이미 존재하는 이메일입니다."),
-    NICKNAME_ALREADY_EXISTS(409, "이미 존재하는 닉네임입니다."),
+    // Authentication
+    EMAIL_ALREADY_EXISTS(409, "이미 사용 중인 이메일입니다."),
+    INVALID_CREDENTIALS(401, "잘못된 이메일 또는 비밀번호입니다."),
+    INVALID_REFRESH_TOKEN(403, "유효하지 않은 리프레시 토큰입니다."),
     USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다."),
-    INVALID_PASSWORD(401, "비밀번호가 일치하지 않습니다."),
-    EXPIRED_TOKEN(401, "토큰이 만료되었습니다."),
-    INVALID_TOKEN_TYPE(401, "유효하지 않은 토큰 타입입니다."),
-    INVALID_TOKEN(401, "유효하지 않은 토큰입니다."),
-    EXPIRED_REFRESH_TOKEN(401, "만료된 리프레시 토큰입니다."),
-    INVALID_REFRESH_TOKEN(401, "유효하지 않거나 만료된 리프레시 토큰입니다."),
     UNAUTHORIZED(401, "권한이 없습니다."),
+    ACCESS_DENIED(403, "접근 권한이 없습니다."),
+    PASSWORD_MISMATCH(400, "비밀번호가 일치하지 않습니다."),
+    ADMIN_PENDING(403, "관리자 승인 대기 중입니다."),
 
-    /* Post */
-    POST_NOT_FOUND(404, "게시글을 찾을 수 없습니다."),
-    UNAUTHORIZED_POST_ACCESS(403, "게시글에 대한 권한이 없습니다."),
-    DUPLICATE_LIKE(409, "이미 좋아요를 눌렀습니다."),
-    NOT_LIKED(400, "좋아요를 누르지 않았습니다."),
+    // Request
+    BAD_REQUEST(400, "잘못된 요청입니다."),
+    INVALID_INPUT(400, "입력값이 올바르지 않습니다."),
+    METHOD_NOT_ALLOWED(405, "허용되지 않은 HTTP 메서드입니다."),
+    UNSUPPORTED_MEDIA_TYPE(415, "지원하지 않는 미디어 타입입니다."),
 
-    /* Comment */
-    COMMENT_NOT_FOUND(404, "댓글을 찾을 수 없습니다."),
-    UNAUTHORIZED_COMMENT_ACCESS(403, "댓글에 대한 권한이 없습니다."),
+    // Server
+    INTERNAL_SERVER_ERROR(500, "서버 내부 오류가 발생했습니다."),
+    SERVICE_UNAVAILABLE(503, "서비스를 사용할 수 없습니다."),
 
-    /* Chat */
-    CHAT_ROOM_NOT_FOUND(404, "채팅방을 찾을 수 없습니다."),
-    UNAUTHORIZED_CHAT_ACCESS(403, "채팅에 대한 권한이 없습니다."),
+    // Data
+    DATA_NOT_FOUND(404, "데이터를 찾을 수 없습니다."),
+    DUPLICATE_RESOURCE(409, "중복된 리소스가 존재합니다."),
+    DATABASE_ERROR(500, "데이터베이스 오류가 발생했습니다."),
 
-    /* Story */
-    STORY_NOT_FOUND(404, "스토리를 찾을 수 없습니다."),
-    UNAUTHORIZED_STORY_ACCESS(403, "스토리에 대한 권한이 없습니다."),
+    // Token
+    EXPIRED_ACCESS_TOKEN(401, "액세스 토큰이 만료되었습니다."),
+    EXPIRED_REFRESH_TOKEN(401, "리프레시 토큰이 만료되었습니다."),
+    INVALID_ACCESS_TOKEN(401, "유효하지 않은 액세스 토큰입니다."),
 
-    /* Profile */
-    PROFILE_NOT_FOUND(404, "프로필을 찾을 수 없습니다."),
-    UNAUTHORIZED_PROFILE_ACCESS(403, "프로필에 대한 권한이 없습니다."),
+    // External API
+    EXTERNAL_API_ERROR(502, "외부 API 호출 중 오류가 발생했습니다."),
+    EMAIL_SEND_FAILED(500, "이메일 전송에 실패했습니다."),
 
-    /* Search */
-    SEARCH_KEYWORD_REQUIRED(400, "검색어를 입력해 주세요."),
-    SEARCH_RESULT_NOT_FOUND(404, "검색 결과가 없습니다."),
-
-    /* Admin */
-    ADMIN_ONLY(403, "관리자만 접근할 수 있습니다."),
-    USER_ALREADY_BLOCKED(409, "이미 차단된 사용자입니다."),
-    USER_NOT_BLOCKED(400, "차단되지 않은 사용자입니다."),
-
-    /* File */
-    FILE_EXTENSION_INVALID(400, "파일 확장자가 유효하지 않습니다."),
-    FILE_UPLOAD_FAILED(500, "파일 업로드에 실패했습니다."),
+    // File Upload
+    FILE_UPLOAD_FAILED(500, "파일 업로드 중 오류가 발생했습니다."),
     FILE_NOT_FOUND(404, "파일을 찾을 수 없습니다."),
+    FILE_TOO_LARGE(413, "파일 크기가 너무 큽니다."),
+    FILE_EXTENSION_INVALID(400, "파일 확장자가 유효하지 않습니다."),
 
-    /* Server */
-    INTERNAL_SERVER_ERROR(500, "서버 에러가 발생했습니다.");
+    // WebSocket
+    WEBSOCKET_CONNECTION_FAILED(500, "웹소켓 연결에 실패했습니다."),
+    MESSAGE_SEND_FAILED(500, "메시지 전송에 실패했습니다.");
 
     private final int status;
     private final String message;
